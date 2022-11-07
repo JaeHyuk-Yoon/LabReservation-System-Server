@@ -1,0 +1,1 @@
+INSERT INTO user(id, name, password, phoneNumber, email, job, permissionState) VALUES ('1234', 'admin', '1111', '010-2212-7168', 'gu9062@naver.com', 'admin', 1);

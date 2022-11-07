@@ -14,20 +14,12 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 @Getter
-public class User {
+public class LabStatus {
     @Id
-    private String ID;
+    private String LabNumber;
 
     @Column
-    private String name;
+    private int UsingStudentNum;
     @Column
-    private String Password;
-    @Column
-    private String PhoneNumber;
-    @Column
-    private String Email;
-    @Column
-    private String Job;
-    @Column
-    private boolean PermissionState;
+    private String LabLeader;
 }

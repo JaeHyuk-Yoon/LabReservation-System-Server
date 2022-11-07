@@ -8,26 +8,22 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity     // DB가 해당 객체를 인식 가능! (해당 클래스로 table을 만든다!)
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
-public class User {
+public class BlackList {
     @Id
     private String ID;
 
     @Column
-    private String name;
+    private int NumberOfReport;
     @Column
-    private String Password;
+    private int ReportOfToday;
     @Column
-    private String PhoneNumber;
-    @Column
-    private String Email;
-    @Column
-    private String Job;
-    @Column
-    private boolean PermissionState;
+    private Date RestrictionEndDate;
+
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -14,20 +13,8 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 @Getter
-public class User {
+public class Token {
     @Id
     private String ID;
 
-    @Column
-    private String name;
-    @Column
-    private String Password;
-    @Column
-    private String PhoneNumber;
-    @Column
-    private String Email;
-    @Column
-    private String Job;
-    @Column
-    private boolean PermissionState;
 }
