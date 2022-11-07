@@ -4,24 +4,53 @@ import com.example.LabReservationProject.dto.StudentDto;
 import com.example.LabReservationProject.dto.UserDto;
 import com.example.LabReservationProject.entity.User;
 import com.example.LabReservationProject.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@Slf4j //로깅 어노테이션
 public class UserService {
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    //전체 테이블 조회
+    public List<User> index() {
+        return userRepository.findAll();
+    }
 
     //계정 생성
-//    public User createUser(UserDto dto) {
-//        User user = dto.toEntity();
-//        if(user.getID() != null) {
-//            return null;
-//        }
-//        return userRepository.save(user);
-//    }
+    public User createUser(UserDto dto) {
 
+        //dto를 entity로 변환
+        User user = dto.toEntity();
 
+        //id컬럼이 pk이기때문에 중복생성은 안되지만 덮어씌워지기때문에 예외처리해야함
+        //1. 요청에서 dto.getid랑 user테이블 싹다 뒤져서 getid한거랑 같은거 있는지 비교
+        int idCheck=0;
+        List<User> userList = index();
+
+        for(User ul: userList) {
+            log.info(user.getID());
+            log.info(ul.getID());
+
+            if(user.getID().equals(ul.getID())) {
+                idCheck++;
+            }
+        }
+        //check가 0보다 크면 하나이상 중복되는게 있다는뜻이므로 널 리턴
+        if(idCheck > 0) {
+            return null;
+        }
+        //id값이 널이면 널 리턴
+        if(user.getID() == null) {
+            return null;
+        }
+        //insert구문 실행
+        return userRepository.save(user);
+    }
 
 
 }
