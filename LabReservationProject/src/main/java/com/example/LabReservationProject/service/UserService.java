@@ -50,7 +50,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
+    //로그인
     public User login(UserDto dto) {
         User user = dto.toEntity();
         //1. 전체 아디 가져오기
@@ -64,5 +64,22 @@ public class UserService {
         }
         return null;
 
+    }
+
+    //토큰 입력해서 허가상태로 변경
+    public User permission(String id) {
+        List<User> userList = index();
+        UserDto dto;
+
+        for(User ul: userList) {
+            if(id.equals(ul.getID())) {
+                dto = UserDto.createUserDto(ul);
+                dto.setPermissionState(true);
+                User updatedUser = dto.toEntity();
+                return userRepository.save(updatedUser);
+            }
+        }
+
+        return null;
     }
 }
