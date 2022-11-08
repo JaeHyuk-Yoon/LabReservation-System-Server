@@ -30,8 +30,9 @@ public class UserApiController {
     //로그인
     @PostMapping("/api/login")
     public ResponseEntity<User> login(@RequestBody UserDto dto) {
+        log.info(dto.toString());
         User resultUser = userService.login(dto);
-
+        log.info(resultUser.toString());
         return (resultUser != null) ? ResponseEntity.status(HttpStatus.OK).body(resultUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
@@ -46,13 +47,17 @@ public class UserApiController {
     //개인정보 수정 *(클라이언트에서 히든인풋으로 id는 무조건 Body JSON에 담겨서 넘어와야함, url에도 id 담겨야하고)
     @PatchMapping("/api/edit/{id}")
     public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UserDto editedDto) {
-        log.info(editedDto.toString());
-        log.info(id);
         User updatedUser = userService.update(id, editedDto);
-        log.info(updatedUser.toString());
+
         return (updatedUser != null) ? ResponseEntity.status(HttpStatus.OK).body(updatedUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //계정 삭제
+    @DeleteMapping("/api/delete/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable String id) {
+        User deletedUser = userService.delete(id);
+        log.info(deletedUser.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(deletedUser);
 
-
+    }
 }

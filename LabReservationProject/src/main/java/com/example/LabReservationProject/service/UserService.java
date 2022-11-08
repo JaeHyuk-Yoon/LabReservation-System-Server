@@ -107,4 +107,11 @@ public class UserService {
         targetUser.userPatch(editedUser);
         return userRepository.save(targetUser);
     }
+
+    // 계정 삭제
+    public User delete(String id) {
+        User targetUser = findByStringId(id);
+        userRepository.delete(targetUser);
+        return targetUser;
+    }
 }
