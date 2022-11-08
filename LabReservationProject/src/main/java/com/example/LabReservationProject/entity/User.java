@@ -34,4 +34,23 @@ public class User {
 
     @Column
     private boolean PermissionState;
+
+    public void userPatch(User user) {
+        //ID는 바뀌면 안됨
+//        if(user.ID != null)
+//            this.ID = user.ID;
+
+        if(user.name != null)
+            this.name = user.name;
+        if(user.Password != null)
+            this.Password = user.Password;
+        if(user.PhoneNumber != null)
+            this.PhoneNumber = user.PhoneNumber;
+        if(user.Email != null)
+            this.Email = user.Email;
+        if(user.Job != null)
+            this.Job = user.Job;
+
+        //permissionState도 바꿀수 없음
+    }
 }

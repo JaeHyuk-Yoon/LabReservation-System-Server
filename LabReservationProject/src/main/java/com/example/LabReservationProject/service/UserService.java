@@ -21,6 +21,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User findByStringId(String id) {
+        List<User> userList = index();
+        User targetUser;
+
+        for(User ul: userList) {
+            if(id.equals(ul.getID())) {
+                return ul;
+            }
+        }
+
+        return null;
+    }
+
     //계정 생성
     public User createUser(UserDto dto) {
 
@@ -81,5 +94,17 @@ public class UserService {
         }
 
         return null;
+    }
+
+    //개인정보 수정
+    public User update(String id, UserDto editedDto) {
+        User editedUser = editedDto.toEntity();
+        User targetUser = findByStringId(id);
+
+        if(targetUser == null || !id.equals(editedUser.getID())) {
+            return null;
+        }
+        targetUser.userPatch(editedUser);
+        return userRepository.save(targetUser);
     }
 }

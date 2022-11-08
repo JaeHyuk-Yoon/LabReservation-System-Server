@@ -43,6 +43,16 @@ public class UserApiController {
         return (permissionResultUser != null) ? ResponseEntity.status(HttpStatus.OK).body(permissionResultUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //개인정보 수정 *(클라이언트에서 히든인풋으로 id는 무조건 Body JSON에 담겨서 넘어와야함, url에도 id 담겨야하고)
+    @PatchMapping("/api/edit/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UserDto editedDto) {
+        log.info(editedDto.toString());
+        log.info(id);
+        User updatedUser = userService.update(id, editedDto);
+        log.info(updatedUser.toString());
+        return (updatedUser != null) ? ResponseEntity.status(HttpStatus.OK).body(updatedUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
 
 
 }
