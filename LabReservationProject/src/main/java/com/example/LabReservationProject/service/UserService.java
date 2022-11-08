@@ -33,13 +33,11 @@ public class UserService {
         List<User> userList = index();
 
         for(User ul: userList) {
-            log.info(user.getID());
-            log.info(ul.getID());
-
             if(user.getID().equals(ul.getID())) {
                 idCheck++;
             }
         }
+
         //check가 0보다 크면 하나이상 중복되는게 있다는뜻이므로 널 리턴
         if(idCheck > 0) {
             return null;
@@ -53,4 +51,18 @@ public class UserService {
     }
 
 
+    public User login(UserDto dto) {
+        User user = dto.toEntity();
+        //1. 전체 아디 가져오기
+        List<User> userList = index();
+        //2. 비교
+        for(User ul: userList) {
+            if(user.getID().equals(ul.getID()) && user.getPassword().equals(ul.getPassword())) {
+                //3. 아디,비번 일치하면 그 계정 반환
+                return ul;
+            }
+        }
+        return null;
+
+    }
 }

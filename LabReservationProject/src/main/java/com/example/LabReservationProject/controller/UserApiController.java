@@ -26,12 +26,17 @@ public class UserApiController {
     //학생 회원가입 및 교수 계정 생성
     @PostMapping("/api/create")
     public ResponseEntity<User> create(@RequestBody UserDto dto) {
-        User user = userService.createUser(dto);
+        User createdUser = userService.createUser(dto);
 
-        return (user != null) ? ResponseEntity.status(HttpStatus.OK).body(user):
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return (createdUser != null) ? ResponseEntity.status(HttpStatus.OK).body(createdUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PostMapping("/api/login")
+    public ResponseEntity<User> login(@RequestBody UserDto dto) {
+        User resultUser = userService.login(dto);
+
+        return (resultUser != null) ? ResponseEntity.status(HttpStatus.OK).body(resultUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
 
 }
