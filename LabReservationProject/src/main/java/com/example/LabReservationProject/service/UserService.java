@@ -114,4 +114,16 @@ public class UserService {
         userRepository.delete(targetUser);
         return targetUser;
     }
+
+    //사용자 1명 조회
+    public User showUser(String id) {
+
+        User user = findByStringId(id);
+        return user;
+    }
+
+    // 모든 사용자 조회
+    public List<User> indexUser() {
+        return userRepository.findAll();
+    }
 }

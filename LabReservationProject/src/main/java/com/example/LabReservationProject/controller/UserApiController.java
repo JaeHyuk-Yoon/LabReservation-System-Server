@@ -11,12 +11,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j //로깅 어노테이션
 public class UserApiController {
 
     @Autowired
     private UserService userService;
+
+    //사용자 1명 조회
+    @GetMapping("/api/user/show/{id}")
+    public ResponseEntity<User> showUser(@PathVariable String id) {
+        User showUser = userService.showUser(id);
+
+        return (showUser != null) ? ResponseEntity.status(HttpStatus.OK).body(showUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    //모든 사용자 조회
+    @GetMapping("/api/user/index")
+    public ResponseEntity<List<User>> indexUser() {
+        List<User> arrUser = userService.indexUser();
+
+        return (arrUser != null) ? ResponseEntity.status(HttpStatus.OK).body(arrUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
     //학생 회원가입 및 교수 계정 생성
     @PostMapping("/api/user/create")
@@ -44,7 +62,7 @@ public class UserApiController {
     }
 
     //개인정보 수정 *(클라이언트에서 히든인풋으로 id는 무조건 Body JSON에 담겨서 넘어와야함, url에도 id 담겨야하고)
-    @PatchMapping("/api/edit/{id}")
+    @PatchMapping("/api/user/edit/{id}")
     public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UserDto editedDto) {
         User updatedUser = userService.update(id, editedDto);
 
@@ -57,6 +75,5 @@ public class UserApiController {
         User deletedUser = userService.delete(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(deletedUser);
-
     }
 }

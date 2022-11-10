@@ -8,4 +8,6 @@ import java.util.ArrayList;
 public interface UserRepository extends JpaRepository<User, Long>  {
     @Override
     ArrayList<User> findAll();
+
+
 }
