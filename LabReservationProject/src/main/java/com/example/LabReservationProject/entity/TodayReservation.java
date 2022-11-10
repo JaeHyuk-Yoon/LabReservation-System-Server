@@ -24,7 +24,7 @@ public class TodayReservation {
     @Column
     private String PermissionState;
     @Column
-    private String Time;
+    private String StartTime;
     @Column
     private String LabNumber;
     @Column

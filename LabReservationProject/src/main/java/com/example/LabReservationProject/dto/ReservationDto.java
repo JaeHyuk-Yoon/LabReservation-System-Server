@@ -13,12 +13,12 @@ import java.util.Date;
 @Getter
 @ToString
 public class ReservationDto {
-    private String ID;
+    private String id;
 
     private String name;
-    private String PermissionState;
-    private String Time;
-    private String LabNumber;
-    private String Seat;
-    private java.util.Date Date;
+    private String permissionState;
+    private String time;
+    private String labNumber;
+    private String seat;
+    private java.util.Date date;
 }

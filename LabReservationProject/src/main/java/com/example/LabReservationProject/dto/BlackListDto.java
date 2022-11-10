@@ -13,9 +13,9 @@ import java.util.Date;
 @Getter
 @ToString
 public class BlackListDto {
-    private String ID;
+    private String id;
 
-    private int NumberOfReport;
-    private int ReportOfToday;
-    private Date RestrictionEndDate;
+    private int numberOfReport;
+    private int reportOfToday;
+    private Date restrictionEndDate;
 }

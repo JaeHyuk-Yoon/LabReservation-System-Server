@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class TokenDto {
 
-    private Long ID;
-    private String Value;
+    private Long id;
+    private String value;
 
 }

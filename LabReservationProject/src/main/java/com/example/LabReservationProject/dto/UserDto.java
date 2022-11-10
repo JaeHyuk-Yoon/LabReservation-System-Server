@@ -21,7 +21,17 @@ public class UserDto {
     private String job;
     private boolean permissionState;
 
-    public User toEntity() { return new User(id, name, password, phoneNumber, email, job, permissionState);}
+    public User toEntity() {
+        return new User(
+                id,
+                name,
+                password,
+                phoneNumber,
+                email,
+                job,
+                permissionState
+        );
+    }
 
     public static UserDto createUserDto(User user) {
         return new UserDto(
