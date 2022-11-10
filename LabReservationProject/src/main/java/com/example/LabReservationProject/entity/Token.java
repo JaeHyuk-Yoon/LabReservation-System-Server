@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,6 +16,9 @@ import javax.persistence.Id;
 @Getter
 public class Token {
     @Id
-    private String ID;
+    private Long ID;
+
+    @Column
+    private String Value;
 
 }

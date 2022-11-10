@@ -1,14 +1,15 @@
 package com.example.LabReservationProject.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 public class TokenDto {
-    private String ID;
+
+    private Long ID;
+    private String Value;
+
 }

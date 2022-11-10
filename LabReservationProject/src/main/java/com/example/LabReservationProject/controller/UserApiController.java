@@ -19,7 +19,7 @@ public class UserApiController {
     private UserService userService;
 
     //학생 회원가입 및 교수 계정 생성
-    @PostMapping("/api/create")
+    @PostMapping("/api/user/create")
     public ResponseEntity<User> create(@RequestBody UserDto dto) {
         User createdUser = userService.createUser(dto);
 
@@ -28,16 +28,15 @@ public class UserApiController {
 
 
     //로그인
-    @PostMapping("/api/login")
+    @PostMapping("/api/user/login")
     public ResponseEntity<User> login(@RequestBody UserDto dto) {
         log.info(dto.toString());
         User resultUser = userService.login(dto);
-        log.info(resultUser.toString());
         return (resultUser != null) ? ResponseEntity.status(HttpStatus.OK).body(resultUser) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     // 토큰 인증시 -> permissionState 1로 변경해야함 *(클라이언트에서 id만 실어서 보내주면됨)
-    @PatchMapping("/api/permission/{id}")
+    @PatchMapping("/api/user/permission/{id}")
     public ResponseEntity<User> permission(@PathVariable String id) {
         User permissionResultUser = userService.permission(id);
 
@@ -53,10 +52,10 @@ public class UserApiController {
     }
 
     //계정 삭제
-    @DeleteMapping("/api/delete/{id}")
+    @DeleteMapping("/api/user/delete/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable String id) {
         User deletedUser = userService.delete(id);
-        log.info(deletedUser.toString());
+
         return ResponseEntity.status(HttpStatus.OK).body(deletedUser);
 
     }
