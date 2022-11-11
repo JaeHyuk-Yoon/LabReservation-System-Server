@@ -1,15 +1,13 @@
 package com.example.LabReservationProject.dto;
 
 import com.example.LabReservationProject.entity.Classes;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
+@Setter
 public class ClassesDto {
     private Long classNum;
 
@@ -19,6 +17,7 @@ public class ClassesDto {
     private String date;
     private String time;
     private String type;
+    private int regularClassNum;
 
     public Classes toEntity() {
         return new Classes(
@@ -28,7 +27,8 @@ public class ClassesDto {
                 labNumber,
                 date,
                 time,
-                type
+                type,
+                regularClassNum
         );
     }
 }

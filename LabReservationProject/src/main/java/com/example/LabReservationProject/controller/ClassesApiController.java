@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +36,13 @@ public class ClassesApiController {
 
         return (createdClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(createdClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+    //정규 수업 && 세미나 수정
+    @PatchMapping("/api/class/edit")
+    public ResponseEntity<List<Classes>> updateClasses(@RequestBody ClassesDto dto) {
+        List<Classes> updatedClasses = classesService.updateClass(dto);
+
+        return (updatedClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(updatedClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
 }

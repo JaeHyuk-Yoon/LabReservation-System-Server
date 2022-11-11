@@ -28,5 +28,29 @@ public class Classes {
     private String time;
     @Column
     private String type;
+    @Column
+    private int regularClassNum;
+
+    public void classPatch(Classes classes) {
+
+        //classNum은 바뀌면 안됨
+//        if(classes.classNum != null)
+//            this.classNum = classes.classNum;
+//      //등록자도 변경 불가
+//        if(classes.userId != null)
+//            this.userId = classes.userId;
+
+        if(classes.className != null)
+            this.className = classes.className;
+        if(classes.labNumber != null)
+            this.labNumber = classes.labNumber;
+        if(classes.date != null)
+            this.date = classes.date;
+        if(classes.time != null)
+            this.time = classes.time;
+
+        //type도 바꿀수 없음
+        //regularClassNum도 바꿀수 없음
+    }
 
 }
