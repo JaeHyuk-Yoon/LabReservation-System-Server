@@ -16,6 +16,12 @@ public class ClassesService {
     @Autowired
     ClassesRepository classesRepository;
 
+    //전체 정규 수업 && 세미나 조회
+    public List<Classes> indexClass() {
+
+        return classesRepository.findAll();
+    }
+
     //정규 수업 && 세미나 등록
     public List<Classes> createClass(List<ClassesDto> arrDto) {
         List<Classes> arrClasses = new ArrayList<Classes>();
@@ -23,10 +29,8 @@ public class ClassesService {
         for(ClassesDto dto : arrDto) {
             arrClasses.add(dto.toEntity());
         }
-        log.info(arrClasses.toString());
 
         if(compareToOriginClass(arrClasses)) { //기존 수업과 중복되는 시간 있는지 비교해주는 함수호출
-            log.info(arrClasses.toString());
             //중복 없으면 모두 저장
             return classesRepository.saveAll(arrClasses);
         }
@@ -56,6 +60,7 @@ public class ClassesService {
         //중복 없으면 true 반환
         return true;
     }
+
 
 
 }

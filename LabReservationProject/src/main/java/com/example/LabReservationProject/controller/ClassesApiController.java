@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,14 @@ public class ClassesApiController {
 
     @Autowired
     ClassesService classesService;
+
+    //전체 정규 수업 && 세미나 조회
+    @GetMapping("/api/class/index")
+    public ResponseEntity<List<Classes>> indexClasses() {
+        List<Classes> arrClass = classesService.indexClass();
+
+        return (arrClass != null) ? ResponseEntity.status(HttpStatus.OK).body(arrClass) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
     //정규 수업 && 세미나 등록
     @PostMapping("/api/class/create")
