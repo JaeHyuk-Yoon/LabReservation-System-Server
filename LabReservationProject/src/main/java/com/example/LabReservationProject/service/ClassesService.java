@@ -222,5 +222,30 @@ public class ClassesService {
 
     }
 
+    //정규 수업 삭제
+    public List<Classes> deleteRegularClass(int regularClassNum) {
+        //1. Classes 테이블 전체 Entity 가져온다.
+        List<Classes> allClasses = classesRepository.findAll();
+        //2. 전체 Entity중에 regularClassNum이 같은건 싹다 지운다.
+        for(Classes target : allClasses) {
+//            Long targetToLong = (long) target.getRegularClassNum();
+            if(target.getRegularClassNum() == regularClassNum) {
+                log.info("22222222");
+                classesRepository.delete(target);
+            }
+        }
+        return classesRepository.findAll();
+    }
 
+    //세미나 삭제
+    public List<Classes> deleteSeminar(long classNum) {
+        //1. Classes 테이블 전체 Entity 가져온다.
+        List<Classes> allClasses = classesRepository.findAll();
+        for(Classes target : allClasses) {
+            if(target.getClassNum().equals(classNum)) {
+                classesRepository.delete(target);
+            }
+        }
+        return classesRepository.findAll();
+    }
 }
