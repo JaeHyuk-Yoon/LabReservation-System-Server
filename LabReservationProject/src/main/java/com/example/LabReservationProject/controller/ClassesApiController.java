@@ -37,10 +37,17 @@ public class ClassesApiController {
         return (createdClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(createdClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    //정규 수업 && 세미나 수정
-    @PatchMapping("/api/class/edit")
-    public ResponseEntity<List<Classes>> updateClasses(@RequestBody ClassesDto dto) {
-        List<Classes> updatedClasses = classesService.updateClass(dto);
+    //세미나 수정 -> 요청 Dto에 classNum이 꼭 포함되어야함
+    @PatchMapping("/api/class/edit/seminar")
+    public ResponseEntity<List<Classes>> updateSeminar(@RequestBody ClassesDto dto) {
+        List<Classes> updatedClasses = classesService.updateSeminar(dto);
+
+        return (updatedClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(updatedClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+    //정규 수업 수정 -> 요청 Dto에 regularClassNum이 꼭 포함되어야함
+    @PatchMapping("/api/class/edit/regular")
+    public ResponseEntity<List<Classes>> updateRegularClasses(@RequestBody ClassesDto dto) {
+        List<Classes> updatedClasses = classesService.updateRegularClass(dto);
 
         return (updatedClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(updatedClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }

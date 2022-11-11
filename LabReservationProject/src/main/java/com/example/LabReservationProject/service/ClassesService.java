@@ -106,9 +106,6 @@ public class ClassesService {
             num = allClasses.get(0).getRegularClassNum();
         }
 
-        log.info("111111111111");
-
-
         for(Classes all : allClasses) {
             if(num < all.getRegularClassNum()) {
                 num = all.getRegularClassNum();
@@ -138,8 +135,62 @@ public class ClassesService {
         return true;
     }
 
-    //정규 수업 && 세미나 수정
-    public List<Classes> updateClass(ClassesDto dto) {
+    // 정규 수업 수정
+    public List<Classes> updateRegularClass(ClassesDto dto) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        long gap = 0l;
+        Calendar cal = Calendar.getInstance();
+
+        //1. Classes 테이블 전체 Entity 가져온다.
+        List<Classes> forCheeckArrClasses = classesRepository.findAll();
+
+        //2. 수정할 Dto와 수정전 Dto 요일차이 구해서 전체중 변경될 Dto에 regularClassNum이 같은 모든 Entity 패치한다.
+        try {
+            for (Classes all : forCheeckArrClasses) {
+                if (all.getRegularClassNum() == dto.getRegularClassNum()) {
+
+                    gap = (formatter.parse(dto.getDate()).getTime() - formatter.parse(all.getDate()).getTime()) /1000/ (24*60*60);
+                    break;
+                }
+            }
+
+            for (Classes all : forCheeckArrClasses) {
+                if (all.getRegularClassNum() == dto.getRegularClassNum()) {
+
+                    cal.setTime(formatter.parse(all.getDate()));
+                    cal.add(Calendar.DATE, (int)gap);
+                    String newDate = formatter.format(cal.getTime());
+
+                    all.setClassName(dto.getClassName());
+                    all.setDate(newDate);
+                    all.setTime(dto.getTime());
+                    all.setLabNumber(dto.getLabNumber());
+                }
+            }
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //3. 패치된 전체 지들끼리 비교해서 중복 확인한다. -> 중복 있으면 널 반환
+        for(int i = 0; i < forCheeckArrClasses.size()-1; i++) {
+            for(int j = i+1; j < forCheeckArrClasses.size(); j++) {
+                if (forCheeckArrClasses.get(i).getLabNumber().equals(forCheeckArrClasses.get(j).getLabNumber()) && //강의실 번호 비교
+                        forCheeckArrClasses.get(i).getDate().equals(forCheeckArrClasses.get(j).getDate()) &&     //수업 날짜 비교
+                        forCheeckArrClasses.get(i).getTime().equals(forCheeckArrClasses.get(j).getTime()))        //수업 시간 비교
+                {
+                    //셋다 동일한게 하나라도 있으면 중복된 시간대가 있다는 의미로 false 반환
+                    return null;
+                }
+            }
+        }
+
+        //4. 중복 없으면 패치된 Entity 포함하여 업데이트된 모든 수업 saveAll
+        return classesRepository.saveAll(forCheeckArrClasses);
+
+    }
+
+    // 세미나 수정
+    public List<Classes> updateSeminar(ClassesDto dto) {
 //        List<Classes> arrClasses = new ArrayList<Classes>();
 
         //1. Classes 테이블 전체 Entity 가져온다.
@@ -170,4 +221,6 @@ public class ClassesService {
         return classesRepository.saveAll(forCheeckArrClasses);
 
     }
+
+
 }
