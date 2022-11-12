@@ -228,9 +228,7 @@ public class ClassesService {
         List<Classes> allClasses = classesRepository.findAll();
         //2. 전체 Entity중에 regularClassNum이 같은건 싹다 지운다.
         for(Classes target : allClasses) {
-//            Long targetToLong = (long) target.getRegularClassNum();
             if(target.getRegularClassNum() == regularClassNum) {
-                log.info("22222222");
                 classesRepository.delete(target);
             }
         }

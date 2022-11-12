@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity     // DB가 해당 객체를 인식 가능! (해당 클래스로 table을 만든다!)
@@ -17,12 +15,14 @@ import java.util.Date;
 @Getter
 public class AllReservation {
     @Id
-    private String ID;
+    private long reservationNum;
 
+    @Column
+    private String ID;
     @Column
     private String name;
     @Column
-    private String PermissionState;
+    private boolean PermissionState;
     @Column
     private String Time;
     @Column
@@ -30,5 +30,5 @@ public class AllReservation {
     @Column
     private String Seat;
     @Column
-    private Date Date;
+    private String Date;
 }

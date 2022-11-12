@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity     // DB가 해당 객체를 인식 가능! (해당 클래스로 table을 만든다!)
@@ -17,12 +15,15 @@ import java.util.Date;
 @Getter
 public class TodayReservation {
     @Id
-    private String ID;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE) // 1, 2, 3, .... 자동 생성 어노테이션   // 파라미터=DB가 id를 자동 생성하는
+    private long reservationNum;
 
+    @Column
+    private String ID;
     @Column
     private String name;
     @Column
-    private String PermissionState;
+    private boolean PermissionState;
     @Column
     private String StartTime;
     @Column
@@ -30,5 +31,6 @@ public class TodayReservation {
     @Column
     private String Seat;
     @Column
-    private Date Date;
+    private String Date;
+
 }

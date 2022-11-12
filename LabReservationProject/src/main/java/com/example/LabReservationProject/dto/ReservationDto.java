@@ -15,14 +15,16 @@ import java.util.Date;
 @Getter
 @ToString
 public class ReservationDto {
-    private String id;
 
+    private long reservationNum;
+    private String id;
     private String name;
-    private String permissionState;
+    private boolean permissionState;
     private String time;
     private String labNumber;
     private String seat;
-    private java.util.Date date;
+    private String date;
 
-    public TodayReservation toTodayEntity() { return new TodayReservation(id, name, permissionState, time, labNumber, seat, date);}
+
+    public TodayReservation toTodayEntity() { return new TodayReservation(reservationNum, id, name, permissionState, time, labNumber, seat, date);}
 }
