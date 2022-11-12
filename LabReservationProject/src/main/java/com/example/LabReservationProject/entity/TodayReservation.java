@@ -33,4 +33,17 @@ public class TodayReservation {
     @Column
     private String Date;
 
+
+    public static AllReservation toAll(TodayReservation today) {
+        return new AllReservation(
+                today.getReservationNum(),
+                today.getID(),
+                today.getName(),
+                today.isPermissionState(),
+                today.getStartTime(),
+                today.getLabNumber(),
+                today.getSeat(),
+                today.getDate()
+        );
+    }
 }

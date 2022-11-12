@@ -1,7 +1,9 @@
 package com.example.LabReservationProject.service;
 
 import com.example.LabReservationProject.dto.ReservationDto;
+import com.example.LabReservationProject.entity.AllReservation;
 import com.example.LabReservationProject.entity.TodayReservation;
+import com.example.LabReservationProject.repository.AllReservationRepository;
 import com.example.LabReservationProject.repository.ClassesRepository;
 import com.example.LabReservationProject.repository.TodayReservationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,9 @@ import java.util.List;
 public class ReservationService {
     @Autowired
     TodayReservationRepository todayReservationRepository;
+
+    @Autowired
+    AllReservationRepository allReservationRepository;
 
 
     //실습실 예약(일과+비일과)
@@ -42,11 +47,19 @@ public class ReservationService {
     }
 
     //내 예약 조회
-    public List<TodayReservation> showMyReservation(String id) {
-        List<TodayReservation> allReservation = todayReservationRepository.findAll();
-        List<TodayReservation> myReservation = new ArrayList<TodayReservation>();
+    public List<AllReservation> showMyReservation(String id) {
+        List<TodayReservation> allTodayReservation = todayReservationRepository.findAll();
+        List<AllReservation> allReservation = allReservationRepository.findAll();
 
-        for(TodayReservation reservation : allReservation) {
+        List<AllReservation> myReservation = new ArrayList<AllReservation>();
+
+        for(TodayReservation reservation : allTodayReservation) {
+            if(reservation.getID().equals(id)) {
+                myReservation.add(TodayReservation.toAll(reservation));
+            }
+        }
+
+        for(AllReservation reservation : allReservation) {
             if(reservation.getID().equals(id)) {
                 myReservation.add(reservation);
             }
@@ -56,6 +69,22 @@ public class ReservationService {
 
     //오늘 예약내역 전체 조회 (조교기능)
     public List<TodayReservation> showAllTodayReservation() {
-        
+        return todayReservationRepository.findAll();
+    }
+
+    public List<AllReservation> showAllReservation() {
+        List<TodayReservation> allTodayReservation = todayReservationRepository.findAll();
+        List<AllReservation> allReservation = allReservationRepository.findAll();
+
+        List<AllReservation> myReservation = new ArrayList<AllReservation>();
+
+        for(TodayReservation reservation : allTodayReservation) {
+            myReservation.add(TodayReservation.toAll(reservation));
+        }
+
+        for(AllReservation reservation : allReservation) {
+            myReservation.add(reservation);
+        }
+        return myReservation;
     }
 }

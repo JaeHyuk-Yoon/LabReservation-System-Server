@@ -31,4 +31,6 @@ public class AllReservation {
     private String Seat;
     @Column
     private String Date;
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.LabReservationProject.controller;
 
 import com.example.LabReservationProject.dto.ReservationDto;
+import com.example.LabReservationProject.entity.AllReservation;
 import com.example.LabReservationProject.entity.TodayReservation;
 import com.example.LabReservationProject.entity.User;
 import com.example.LabReservationProject.service.ClassesService;
@@ -21,18 +22,26 @@ public class ReservationApiController {
 
     //내 예약 조회
     @GetMapping("/api/reservation/show/{id}")
-    public ResponseEntity<List<TodayReservation>> createReservation(@PathVariable String id) {
-        List<TodayReservation> myReservation = reservationService.showMyReservation(id);
+    public ResponseEntity<List<AllReservation>> createReservation(@PathVariable String id) {
+        List<AllReservation> myReservation = reservationService.showMyReservation(id);
 
         return (!myReservation.isEmpty()) ? ResponseEntity.status(HttpStatus.OK).body(myReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    //전체 예약내역 조회
+    //오늘 예약내역 전체 조회(조교 기능)
     @GetMapping("/api/reservation/show/today")
-    public ResponseEntity<List<TodayReservation>> indexReservation() {
+    public ResponseEntity<List<TodayReservation>> todayAllReservation() {
         List<TodayReservation> todayReservation = reservationService.showAllTodayReservation();
 
-        return (!todayReservation.isEmpty()) ? ResponseEntity.status(HttpStatus.OK).body(todayReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return (todayReservation != null) ? ResponseEntity.status(HttpStatus.OK).body(todayReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    //모오오오든 정말 모오오오오오ㅗㅇ든 과거까지 모든 예약 내역 조회(조교 기능)
+    @GetMapping("/api/reservation/show/all")
+    public ResponseEntity<List<AllReservation>> indexReservation() {
+        List<AllReservation> allReservation = reservationService.showAllReservation();
+
+        return (!allReservation.isEmpty()) ? ResponseEntity.status(HttpStatus.OK).body(allReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     //실습실 예약(일과 + 비일과)
@@ -43,7 +52,7 @@ public class ReservationApiController {
         return (createdReservation != null) ? ResponseEntity.status(HttpStatus.OK).body(createdReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    //예약 취소 (내 예약 조회에서 내가 예약한 내역 선택하여 취소)
+    //예약 취소 (내 예약 조회에서 내가 예약한 내역 선택하여 취소)(아직 사용하지 않은 시간에대한 예약만 삭제가능)
     @DeleteMapping("/api/reservation/delete/{reservationNum}")
     public ResponseEntity<List<TodayReservation>> createReservation(@PathVariable long reservationNum) {
         List<TodayReservation> deletedReservation = reservationService.deleteReservation(reservationNum);
