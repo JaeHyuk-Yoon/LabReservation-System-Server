@@ -1,9 +1,6 @@
 package com.example.LabReservationProject.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class BlackList {
     @Id
     private String ID;
@@ -24,6 +22,6 @@ public class BlackList {
     @Column
     private int ReportOfToday;
     @Column
-    private Date RestrictionEndDate;
+    private String RestrictionEndDate;
 
 }

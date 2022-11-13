@@ -17,5 +17,5 @@ public class BlackListDto {
 
     private int numberOfReport;
     private int reportOfToday;
-    private Date restrictionEndDate;
+    private String restrictionEndDate;
 }
