@@ -1,9 +1,6 @@
 package com.example.LabReservationProject.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class TodayReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE) // 1, 2, 3, .... 자동 생성 어노테이션   // 파라미터=DB가 id를 자동 생성하는

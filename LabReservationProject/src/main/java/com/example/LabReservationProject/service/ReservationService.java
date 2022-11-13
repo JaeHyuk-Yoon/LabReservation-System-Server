@@ -72,6 +72,7 @@ public class ReservationService {
         return todayReservationRepository.findAll();
     }
 
+    //과거까지 모든 예약내역 전체 조회 (조교기능)
     public List<AllReservation> showAllReservation() {
         List<TodayReservation> allTodayReservation = todayReservationRepository.findAll();
         List<AllReservation> allReservation = allReservationRepository.findAll();
@@ -86,5 +87,12 @@ public class ReservationService {
             myReservation.add(reservation);
         }
         return myReservation;
+    }
+
+    //실습실 비일과 시간 예약 허가
+    public TodayReservation permitReservation(long reservationNum) {
+        TodayReservation reservation = todayReservationRepository.findById(reservationNum).orElse(null);
+        reservation.setPermissionState(true);
+        return todayReservationRepository.save(reservation);
     }
 }
