@@ -1,6 +1,5 @@
 package com.example.LabReservationProject.service;
 
-import com.example.LabReservationProject.dto.StudentDto;
 import com.example.LabReservationProject.dto.UserDto;
 import com.example.LabReservationProject.entity.User;
 import com.example.LabReservationProject.repository.UserRepository;

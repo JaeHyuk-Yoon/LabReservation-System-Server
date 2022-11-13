@@ -25,11 +25,26 @@ public class ReservationService {
 
     //실습실 예약(일과+비일과)
     public List<TodayReservation> createReservation(List<ReservationDto> arrDto) {
-
+        List<TodayReservation> allReservation = todayReservationRepository.findAll();
         List<TodayReservation> createReservation = new ArrayList<TodayReservation>();
+
         for(ReservationDto rdto : arrDto) {
+            //비일과 예약신청일 경우 오늘 처음 비일과 예약 신청하는것인지 연장신청인지 확인
+            if(rdto.isPermissionState() == false) {
+                for (TodayReservation reservation : allReservation) {
+                    //이미 동일한 아이디로 비일과 예약이 승인된것이 있는지 확인하여 true이면 연장신청 !
+                    if (rdto.getId().equals(reservation.getID()) &&
+                            reservation.isPermissionState() == true) {
+                        //연장신청일 경우 permissionState를 true로 변경
+                        if(Integer.parseInt(reservation.getTime().substring(0,2)) < 9 || Integer.parseInt(reservation.getTime().substring(0,2)) >= 17) {
+                            rdto.setPermissionState(true);
+                        }
+                    }
+                }
+            }
             createReservation.add(rdto.toTodayEntity());
         }
+
         todayReservationRepository.saveAll(createReservation);
         return todayReservationRepository.findAll();
     }

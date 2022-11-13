@@ -2,10 +2,7 @@ package com.example.LabReservationProject.dto;
 
 import com.example.LabReservationProject.entity.TodayReservation;
 import com.example.LabReservationProject.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import java.util.Date;
@@ -14,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @ToString
+@Setter
 public class ReservationDto {
 
     private long reservationNum;

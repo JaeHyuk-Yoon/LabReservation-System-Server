@@ -23,7 +23,7 @@ public class TodayReservation {
     @Column
     private boolean PermissionState;
     @Column
-    private String StartTime;
+    private String Time;
     @Column
     private String LabNumber;
     @Column
@@ -38,7 +38,7 @@ public class TodayReservation {
                 today.getID(),
                 today.getName(),
                 today.isPermissionState(),
-                today.getStartTime(),
+                today.getTime(),
                 today.getLabNumber(),
                 today.getSeat(),
                 today.getDate()
