@@ -1,7 +1,9 @@
 package com.example.LabReservationProject.service;
 
 import com.example.LabReservationProject.dto.UserDto;
+import com.example.LabReservationProject.entity.BlackList;
 import com.example.LabReservationProject.entity.User;
+import com.example.LabReservationProject.repository.BlackListRepository;
 import com.example.LabReservationProject.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BlackListRepository blackListRepository;
 
     //전체 테이블 조회
     public List<User> index() {
@@ -67,13 +72,25 @@ public class UserService {
         User user = dto.toEntity();
         //1. 전체 아디 가져오기
         List<User> userList = index();
+        List<BlackList> blackLists = blackListRepository.findAll();
+
+        // 계정 정지상태인지 판단해야함
+        for(BlackList black : blackLists) {
+            if (user.getID().equals(black.getID()) && !black.getRestrictionEndDate().equals(null)) {
+                //반환으로 뭘보내야할지 아직 결정안됨, 그냥 null보내면 id나 패스워드 틀려서 로그인 못하는거랑 구분 불가능
+                    return null;
+            }
+        }
+
         //2. 비교
         for(User ul: userList) {
             if(user.getID().equals(ul.getID()) && user.getPassword().equals(ul.getPassword())) {
+
                 //3. 아디,비번 일치하면 그 계정 반환
                 return ul;
             }
         }
+        //없는 아이디 or 비번 틀림
         return null;
 
     }
@@ -87,6 +104,22 @@ public class UserService {
             if(id.equals(ul.getID())) {
                 dto = UserDto.createUserDto(ul);
                 dto.setPermissionState(true);
+                User updatedUser = dto.toEntity();
+                return userRepository.save(updatedUser);
+            }
+        }
+        return null;
+    }
+
+    //신고 3회 누적으로 사용 정지
+    public User nonPermission(String id) {
+        List<User> userList = index();
+        UserDto dto;
+
+        for(User ul: userList) {
+            if(id.equals(ul.getID())) {
+                dto = UserDto.createUserDto(ul);
+                dto.setPermissionState(false);
                 User updatedUser = dto.toEntity();
                 return userRepository.save(updatedUser);
             }

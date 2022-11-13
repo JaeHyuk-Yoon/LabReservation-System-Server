@@ -19,6 +19,9 @@ public class BlackListService {
     @Autowired
     BlackListRepository blackListRepository;
 
+    @Autowired
+    UserService userService;
+
     //신고 기능
     public BlackList reportUser(String id) {
         List<BlackList> blackLists = blackListRepository.findAll();
@@ -33,6 +36,7 @@ public class BlackListService {
                     cal.add(Calendar.DATE, 4);
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     black.setRestrictionEndDate(formatter.format(cal.getTime()));
+                    userService.nonPermission(id);
                 }
                 return blackListRepository.save(black);
             }
