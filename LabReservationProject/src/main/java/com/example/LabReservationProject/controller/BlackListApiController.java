@@ -22,6 +22,7 @@ public class BlackListApiController {
     public ResponseEntity<BlackList> reportUser(@PathVariable String userId) {
         BlackList result = blackListService.reportUser(userId);
 
+
         return (result != null) ? ResponseEntity.status(HttpStatus.OK).body(result) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

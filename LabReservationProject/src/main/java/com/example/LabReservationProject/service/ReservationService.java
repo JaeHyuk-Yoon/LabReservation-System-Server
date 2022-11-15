@@ -4,13 +4,14 @@ import com.example.LabReservationProject.dto.ReservationDto;
 import com.example.LabReservationProject.entity.AllReservation;
 import com.example.LabReservationProject.entity.TodayReservation;
 import com.example.LabReservationProject.repository.AllReservationRepository;
-import com.example.LabReservationProject.repository.ClassesRepository;
 import com.example.LabReservationProject.repository.TodayReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -109,5 +110,30 @@ public class ReservationService {
         TodayReservation reservation = todayReservationRepository.findById(reservationNum).orElse(null);
         reservation.setPermissionState(true);
         return todayReservationRepository.save(reservation);
+    }
+
+    //실습실 현재 현황 조회
+    public List<TodayReservation> showLabStatus() {
+        List<TodayReservation> reservation = todayReservationRepository.findAll();
+        List<TodayReservation> statusReservation = new ArrayList<TodayReservation>();
+
+        Date now = new Date();
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
+        String nowMin;
+
+        //30분 이후이면
+        if(Integer.parseInt(time.format(now).substring(3)) - 30 >= 0) {
+            nowMin = "30";
+        }
+        else {
+            nowMin = "00";
+        }
+        for(TodayReservation arrReservation : reservation) {
+
+            if(arrReservation.getTime().substring(0,2).equals(time.format(now).substring(0,2)) && arrReservation.getTime().substring(3).equals(nowMin)) {
+                statusReservation.add(arrReservation);
+            }
+        }
+            return statusReservation;
     }
 }

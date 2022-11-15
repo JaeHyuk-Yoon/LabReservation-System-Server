@@ -1,6 +1,5 @@
 package com.example.LabReservationProject.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.example.LabReservationProject.entity.BlackList;
 import com.example.LabReservationProject.repository.BlackListRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ public class BlackListService {
 
     @Autowired
     BlackListRepository blackListRepository;
-
     @Autowired
     UserService userService;
 
@@ -41,7 +39,6 @@ public class BlackListService {
                 return blackListRepository.save(black);
             }
         }
-
         return blackListRepository.save(new BlackList(id, 1, 1, null));
     }
 }

@@ -3,8 +3,6 @@ package com.example.LabReservationProject.controller;
 import com.example.LabReservationProject.dto.ReservationDto;
 import com.example.LabReservationProject.entity.AllReservation;
 import com.example.LabReservationProject.entity.TodayReservation;
-import com.example.LabReservationProject.entity.User;
-import com.example.LabReservationProject.service.ClassesService;
 import com.example.LabReservationProject.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +67,11 @@ public class ReservationApiController {
         return (permittedReservation != null) ? ResponseEntity.status(HttpStatus.OK).body(permittedReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //지금시간 실습실 전체 현황 조회
+    @GetMapping("/api/lab/show")
+    public ResponseEntity<List<TodayReservation>> showLabStatus() {
+        List<TodayReservation> labStatusDto = reservationService.showLabStatus();
+
+        return (labStatusDto != null) ? ResponseEntity.status(HttpStatus.OK).body(labStatusDto) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 }
