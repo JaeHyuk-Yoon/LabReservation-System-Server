@@ -67,6 +67,14 @@ public class ReservationApiController {
         return (permittedReservation != null) ? ResponseEntity.status(HttpStatus.OK).body(permittedReservation) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    //비일과 예약 일괄 승인 기능 (조교)
+    @GetMapping("/api/reservation/permit/all")
+    public ResponseEntity<List<TodayReservation>> permitAllReservation() {
+        List<TodayReservation> permittedReservationList = reservationService.permitAllReservation();
+
+        return (permittedReservationList != null) ? ResponseEntity.status(HttpStatus.OK).body(permittedReservationList) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
     //지금시간 실습실 전체 현황 조회
     @GetMapping("/api/lab/show")
     public ResponseEntity<List<TodayReservation>> showLabStatus() {

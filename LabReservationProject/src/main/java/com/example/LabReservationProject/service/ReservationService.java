@@ -127,6 +127,18 @@ public class ReservationService {
         return todayReservationRepository.save(reservation);
     }
 
+    //비일과 예약 일괄 승인 기능 (조교)
+    public List<TodayReservation> permitAllReservation() {
+        List<TodayReservation> todayReservations = todayReservationRepository.findAll();
+
+        for(TodayReservation today : todayReservations) {
+            if(today.isPermissionState() == false) {
+                today.setPermissionState(true);
+            }
+        }
+        return todayReservationRepository.saveAll(todayReservations);
+    }
+
     //실습실 현재 현황 조회
     public List<TodayReservation> showLabStatus() {
         List<TodayReservation> reservation = todayReservationRepository.findAll();
@@ -164,4 +176,6 @@ public class ReservationService {
         allReservationRepository.saveAll(newAllReservation);
         todayReservationRepository.deleteAll();
     }
+
+
 }
