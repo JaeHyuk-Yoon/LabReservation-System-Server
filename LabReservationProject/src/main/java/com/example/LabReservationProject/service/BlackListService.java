@@ -56,4 +56,9 @@ public class BlackListService {
             }
         }
     }
+
+    //조회 기능
+    public List<BlackList> showBlackList() {
+        return blackListRepository.findAll();
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+//매일 오전 9시에 실행되어야할 작업
 @Component
 public class DateScheduler {
 
