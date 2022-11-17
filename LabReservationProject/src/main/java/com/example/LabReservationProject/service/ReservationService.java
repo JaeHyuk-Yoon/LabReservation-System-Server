@@ -2,8 +2,10 @@ package com.example.LabReservationProject.service;
 
 import com.example.LabReservationProject.dto.ReservationDto;
 import com.example.LabReservationProject.entity.AllReservation;
+import com.example.LabReservationProject.entity.Classes;
 import com.example.LabReservationProject.entity.TodayReservation;
 import com.example.LabReservationProject.repository.AllReservationRepository;
+import com.example.LabReservationProject.repository.ClassesRepository;
 import com.example.LabReservationProject.repository.TodayReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,26 @@ public class ReservationService {
     @Autowired
     AllReservationRepository allReservationRepository;
 
+    @Autowired
+    ClassesRepository classesRepository;
+
 
     //실습실 예약(일과+비일과)
     public List<TodayReservation> createReservation(List<ReservationDto> arrDto) {
         List<TodayReservation> allReservation = todayReservationRepository.findAll();
+        List<Classes> classeslist = classesRepository.findAll();
         List<TodayReservation> createReservation = new ArrayList<TodayReservation>();
 
+
         for(ReservationDto rdto : arrDto) {
+            //정규수업과 세미나랑 중복 체크
+            for(Classes classArr : classeslist) {
+                if(rdto.getLabNumber().equals(classArr.getLabNumber()) &&
+                        rdto.getDate().equals(classArr.getDate()) &&
+                        rdto.getTime().substring(0,2).equals(classArr.getTime())) {
+                    return null;
+                }
+            }
             //비일과 예약신청일 경우 오늘 처음 비일과 예약 신청하는것인지 연장신청인지 확인
             if(rdto.isPermissionState() == false) {
                 for (TodayReservation reservation : allReservation) {
