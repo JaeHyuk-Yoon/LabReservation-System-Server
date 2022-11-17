@@ -14,6 +14,7 @@ public class TokenService {
     @Autowired
     TokenRepository tokenRepository;
 
+    //토큰 id는 무조건 1 ( findById(id) 하기위해)
     long id = 1;
 
     //토큰 조회
@@ -52,5 +53,12 @@ public class TokenService {
         }
 
         return value;
+    }
+
+    //id 1번 Token value를 null로 변경
+    public void tokenToNULL() {
+        Token token = tokenRepository.findById(id).orElse(null);
+        token.setValue(null);
+        tokenRepository.save(token);
     }
 }

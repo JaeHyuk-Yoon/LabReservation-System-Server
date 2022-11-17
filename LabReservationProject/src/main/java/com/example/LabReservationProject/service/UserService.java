@@ -159,4 +159,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    //모든 학생들 permissionState false로 변경
+    public void initStudentPermissionState() {
+        List<User> userList = userRepository.findAll();
+
+        for(User user : userList) {
+            if(user.getJob().equals("student")) {
+                user.setPermissionState(false);
+            }
+        }
+        userRepository.saveAll(userList);
+    }
 }

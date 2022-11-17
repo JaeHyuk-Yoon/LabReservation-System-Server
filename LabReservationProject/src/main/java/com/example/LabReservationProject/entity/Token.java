@@ -1,9 +1,6 @@
 package com.example.LabReservationProject.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +11,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class Token {
     @Id
     private Long ID;

@@ -24,6 +24,7 @@ public class BlackListService {
     public BlackList reportUser(String id) {
         List<BlackList> blackLists = blackListRepository.findAll();
         for(BlackList black : blackLists) {
+            //이미 한번이상 신고된적 있으면
             if(black.getID().equals(id)) {
                 black.setReportOfToday(black.getReportOfToday()+1);
                 black.setNumberOfReport(black.getNumberOfReport()+1);
@@ -39,6 +40,7 @@ public class BlackListService {
                 return blackListRepository.save(black);
             }
         }
+        //최초 신고 당했을때
         return blackListRepository.save(new BlackList(id, 1, 1, null));
     }
 
@@ -50,6 +52,7 @@ public class BlackListService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         for(BlackList black : blackLists) {
+            black.setReportOfToday(0);
             if(black.getRestrictionEndDate().equals(formatter.format(now))) {
                 black.setRestrictionEndDate(null);
                 userService.permission(black.getID());
