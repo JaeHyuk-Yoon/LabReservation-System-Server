@@ -41,4 +41,19 @@ public class BlackListService {
         }
         return blackListRepository.save(new BlackList(id, 1, 1, null));
     }
+
+    //Black List에서 Ban처리된 학생중 정지가 끝나는 날짜인 학생 정지날짜 null로 바꾸고 permissionState true로 업데이트
+    public void updateBan() {
+        List<BlackList> blackLists = blackListRepository.findAll();
+        //오늘날짜 받아서 오늘이랑 같은 날짜 있으면 null로
+        Date now = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        for(BlackList black : blackLists) {
+            if(black.getRestrictionEndDate().equals(formatter.format(now))) {
+                black.setRestrictionEndDate(null);
+                userService.permission(black.getID());
+            }
+        }
+    }
 }

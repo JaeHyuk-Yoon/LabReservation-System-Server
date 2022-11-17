@@ -151,4 +151,17 @@ public class ReservationService {
         }
             return statusReservation;
     }
+
+    // todayReservation 데이터 모두 -> allReservation 테이블로 이동
+    public void moveReservationData() {
+        List<TodayReservation> todayReservation = todayReservationRepository.findAll();
+        List<AllReservation> newAllReservation = new ArrayList<AllReservation>();
+
+        for(TodayReservation today : todayReservation) {
+            newAllReservation.add(TodayReservation.toAll(today));
+        }
+
+        allReservationRepository.saveAll(newAllReservation);
+        todayReservationRepository.deleteAll();
+    }
 }

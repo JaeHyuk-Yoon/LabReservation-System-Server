@@ -82,7 +82,7 @@ public class UserService {
             }
         }
 
-        //2. 비교
+        //2. 아디, 비번 비교
         for(User ul: userList) {
             if(user.getID().equals(ul.getID()) && user.getPassword().equals(ul.getPassword())) {
 
@@ -158,4 +158,5 @@ public class UserService {
     public List<User> indexUser() {
         return userRepository.findAll();
     }
+
 }
