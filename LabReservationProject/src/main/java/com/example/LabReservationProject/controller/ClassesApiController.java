@@ -60,7 +60,7 @@ public class ClassesApiController {
         return (deletedClasses != null) ? ResponseEntity.status(HttpStatus.OK).body(deletedClasses) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    //세미나 수정 -> 요청 URL에 classNum이 꼭 포함되어야함
+    //세미나 삭제 -> 요청 URL에 classNum이 꼭 포함되어야함
     @DeleteMapping("/api/class/delete/seminar/{classNum}")
     public ResponseEntity<List<Classes>> deleteSeminar(@PathVariable long classNum) {
         List<Classes> deletedClasses = classesService.deleteSeminar(classNum);

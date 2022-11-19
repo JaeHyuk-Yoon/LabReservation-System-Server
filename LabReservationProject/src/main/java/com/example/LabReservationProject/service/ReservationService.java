@@ -36,7 +36,17 @@ public class ReservationService {
         List<TodayReservation> createReservation = new ArrayList<TodayReservation>();
 
 
+
         for(ReservationDto rdto : arrDto) {
+            //기존 예약들과 중복 비교
+            for (TodayReservation reservation : allReservation) {
+                if(rdto.getLabNumber().equals(reservation.getLabNumber()) &&
+                        rdto.getDate().equals(reservation.getDate()) &&
+                        rdto.getTime().equals(reservation.getTime()) &&
+                        rdto.getSeat().equals(reservation.getSeat()) ) {
+                    return null;
+                }
+            }
             //정규수업과 세미나랑 중복 체크
             for(Classes classArr : classeslist) {
                 if(rdto.getLabNumber().equals(classArr.getLabNumber()) &&
