@@ -17,6 +17,8 @@ public class Classes {
     @Column
     private String userId;
     @Column
+    private String userName;
+    @Column
     private String className;
     @Column
     private String labNumber;

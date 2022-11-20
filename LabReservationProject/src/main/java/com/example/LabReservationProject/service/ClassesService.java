@@ -59,6 +59,7 @@ public class ClassesService {
                                 new ClassesDto(
                                         dto.getClassNum(),
                                         dto.getUserId(),
+                                        dto.getUserName(),
                                         dto.getClassName(),
                                         dto.getLabNumber(),
                                         newDate,

@@ -12,6 +12,7 @@ public class ClassesDto {
     private Long classNum;
 
     private String userId;
+    private String userName;
     private String className;
     private String labNumber;
     private String date;
@@ -23,6 +24,7 @@ public class ClassesDto {
         return new Classes(
                 classNum,
                 userId,
+                userName,
                 className,
                 labNumber,
                 date,
